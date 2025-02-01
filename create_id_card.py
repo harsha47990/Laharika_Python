@@ -85,11 +85,15 @@ def add_fields_to_image(image, fields, position, font_path, font_size, next_line
        
     return colon_x, y
 
-def create_front_page(template_path,output_path, start_position, fields, values, fields_font="arialbd.ttf",value_font="arial.ttf",colon_value_buffer = 30, field_font_size = 30, value_font_size = 30, next_line_buffer = 10 ):
+def create_front_page(template_path,photo_path,output_path, start_position, fields, values, fields_font="arialbd.ttf",value_font="arial.ttf",photo_position = (207, 214), resize = (250, 290),colon_value_buffer = 30, field_font_size = 30, value_font_size = 30, next_line_buffer = 10 ):
     
     image = Image.open(template_path)
     if image.mode == "RGBA":
         image = image.convert("RGB")
+
+   
+    employee_image = Image.open(photo_path).resize(resize)
+    image.paste(employee_image, photo_position)
 
     colon_x_position, y = add_fields_to_image(image, fields, start_position, draw_colon = True, font_path=fields_font, font_size=field_font_size,next_line_buffer = next_line_buffer)
 
@@ -118,12 +122,13 @@ def create_back_page(template_path,output_path, start_position, fields, values, 
 
 
 front_template = r"C:\Users\harsha.martha\OneDrive - WIRB-Copernicus Group, Inc\Documents\harsha\id\front.png"
+photo_path = r"C:\Users\harsha.martha\Downloads\pp blue.jpg"
 front_start_position = (40, 550)
 
 
 fields = ["Name", "W/o - S/o", "Age", "Employee ID", "VO Name", "Village", "Mandal", "Dist"]
 values = ["Martha Harsha", "Martha Ramesh", "26","15115245", "KMR","KRR","DFDFDF","VFDfDFDf"]
-create_front_page(front_template, "output1.jpg", front_start_position,fields,values)
+create_front_page(front_template,photo_path, "output1.jpg", front_start_position,fields,values)
 
 
 back_template = r"C:\Users\harsha.martha\OneDrive - WIRB-Copernicus Group, Inc\Documents\harsha\id\bck.png"
